@@ -68,7 +68,7 @@ const Sidebar = () => {
                                                     fill='currentColor'
                                                 />
                                             </svg>
-                                            <span className='ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark'>{t('dashboard')}</span>
+                                            <span className='ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark'>{t('Asosiy sahifa')}</span>
                                         </div>
                                     </NavLink>
                                 </li>
@@ -110,7 +110,7 @@ const Sidebar = () => {
                                                 />
                                             </svg>
 
-                                            <span className='ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark'>{t('events')}</span>
+                                            <span className='ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark'>{t('Serverga yo\'naltirilgan m...')}</span>
                                         </div>
                                     </NavLink>
                                 </li>
