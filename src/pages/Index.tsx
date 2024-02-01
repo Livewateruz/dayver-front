@@ -50,6 +50,7 @@ const Index = () => {
                         <tr>
                             <th className='text-center'>#</th>
                             <th className='text-center'>Seriya</th>
+                            <th className='text-center'>Object nomi</th>
                             <th className='text-center'>Suv satxi(sm)</th>
                             <th className='text-center'>Tuzlik darajasi(EC25)</th>
                             <th className='text-center'>Bosim (kPa)</th>
@@ -66,6 +67,9 @@ const Index = () => {
                                     <td className=' '>
                                         <div className='whitespace-nowrap'>{data?.device?.serie}</div>
                                     </td>
+                                    <td className=''>
+                                                <div className='whitespace-nowrap text-xs'>{data?.device?.name}</div>
+                                            </td>
                                     <td className=' '>
                                         <div className='whitespace-nowrap'>{data.level}</div>
                                     </td>

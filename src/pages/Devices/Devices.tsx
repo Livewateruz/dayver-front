@@ -69,6 +69,15 @@ function Devices () {
                             records={devices.data}
                             columns={[
                                 {
+                                    accessor: 'Obyekt nomi',
+                                    render: ({ name }) => (
+                                        <span>
+                                            <div className='font-semibold'>{`${name}`}</div>
+                                        </span>
+                                    ),
+                                    sortable: false
+                                },
+                                {
                                     accessor: 'Id',
                                     sortable: false,
                                     render: ({ _id }) => (
@@ -95,24 +104,7 @@ function Devices () {
                                         </div>
                                     )
                                 },
-                                {
-                                    accessor: 'Ip Address',
-                                    render: ({ ip_address }) => (
-                                        <span>
-                                            <div className='font-semibold'>{`${ip_address}`}</div>
-                                        </span>
-                                    ),
-                                    sortable: false
-                                },
-                                {
-                                    accessor: 'Port',
-                                    render: ({ port }) => (
-                                        <span>
-                                            <div className='font-semibold'>{`${port}`}</div>
-                                        </span>
-                                    ),
-                                    sortable: false
-                                },
+                              
                                 {
                                     accessor: 'Egasi',
                                     sortable: false,

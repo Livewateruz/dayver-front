@@ -73,6 +73,12 @@ const AddDevice = () => {
                 <form onSubmit={e => handleSubmit(e)} className=' flex justify-between gap-32 px-10  w-full '>
                     <div className='mb-6  w-1/2'>
                         <div className='flex items-center mt-4'>
+                            <label htmlFor='name' className='flex-1 ltr:mr-2 rtl:ml-2 mb-'>
+                            Obyekt nomi
+                            </label>
+                            <input required onChange={e => handleChange(e)} id='name' type='text' name='name' className='form-input lg:w-[270px] w-2/3' placeholder='123' />
+                        </div>
+                        <div className='flex items-center mt-4'>
                             <label htmlFor='number' className='flex-1 ltr:mr-2 rtl:ml-2 mb-'>
                                 Qurilma seriyasi
                             </label>
@@ -99,33 +105,7 @@ const AddDevice = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className='flex items-center mt-4 '>
-                            <label htmlFor='ip_address' className='flex-1 ltr:mr-2 rtl:ml-2 mb-0'>
-                                Ip Adress
-                            </label>
-                            <MaskedInput
-                                required
-                                onChange={e => handleChange(e)}
-                                id='ipMask'
-                                name='ip_address'
-                                type='text'
-                                placeholder='___.___.___.___'
-                                className='form-input lg:w-[147px] w-2/3'
-                                mask={[/[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/]}
-                            />
-                            <input id='port' type='number' name='port' required placeholder='4000' onChange={e => handleChange(e)} className='form-input lg:w-[75px] w-2/3 ml-2' />
-                            <button onClick={() => showMessage('Ip Address is working')} type='button' className=' p-1 ml-1  rounded-full'>
-                                <svg className='w-6 h-6 text-gray-800 dark:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 20'>
-                                    <path
-                                        stroke='currentColor'
-                                        strokeLinecap='round'
-                                        stroke-linejoin='round'
-                                        strokeWidth='2'
-                                        d='m6 9 2 3 5-5M9 19A18.55 18.55 0 0 1 1 4l8-3 8 3a18.549 18.549 0 0 1-8 15Z'
-                                    />
-                                </svg>
-                            </button>
-                        </div>
+                      
                     </div>
                     <div className='mb-6  w-1/2'>
                         <div className='flex items-center mt-4'>
