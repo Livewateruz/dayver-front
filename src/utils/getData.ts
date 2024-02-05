@@ -1,9 +1,6 @@
 import { SetStateAction } from 'react';
 import { api } from './api';
 import { toast } from './toast';
-import { AxiosError } from 'axios';
-import { useSelector } from 'react-redux';
-import { IRootState } from '../store';
 
 const getData = ({ url, token , setData, setLoading }: { url: string; token :string | boolean ; setData: SetStateAction<any>; setLoading?: SetStateAction<any> }) => {
     setLoading && setLoading(true);
@@ -14,9 +11,9 @@ const getData = ({ url, token , setData, setLoading }: { url: string; token :str
                 setLoading && setLoading(false);
             }
         })
-        .catch((err: AxiosError) => {
+        .catch((err) => {
             toast.fire({
-                text: err.message,
+                text: err.response.data.msg || err.message,
                 toast: true,
                 position: 'top-end',
                 timer: 3000,

@@ -10,17 +10,16 @@ import { getDateFromTimestamp, getHourAndMinutesFromTimestamp } from '../utils/u
 const Index = () => {
     const [baseData, setBaseData] = useState<EventFace[]>([]);
     const [stat, setStat] = useState<{ total: number; good: number; bad: number }>({ total: 0, good: 0, bad: 0 });
-    const [loading, setLoading] = useState(false);
     const { token } = useSelector((state: IRootState) => state.data);
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setPageTitle('Asosiy sahifa'));
-        api('basedata?page[limit]=50' ,  { headers: { authorization: `Bearer ${token}` } }).then(res => {
+        api('basedata/?page[limit]=50' ,  { headers: { authorization: `Bearer ${token}` } }).then(res => {
             const { data } = res.data;
-            const last_updated = data.filter((el: EventFace) => el?.date_in_ms === data[0].date_in_ms);
-            const bad = last_updated.filter((el: EventFace) => el.signal === 'nosignal');
-            const good = last_updated.filter((el: EventFace) => el.signal === 'good');
+            const last_updated = data.filter((el: EventFace) => el?.date_in_ms === data[0]?.date_in_ms);
+            const bad = last_updated.filter((el: EventFace) => el?.signal === 'nosignal');
+            const good = last_updated.filter((el: EventFace) => el?.signal === 'good');
             setStat({ total: last_updated.length, good: good.length, bad: bad.length });
             setBaseData(last_updated);
         });
@@ -50,10 +49,10 @@ const Index = () => {
                         <tr>
                             <th className='text-center'>#</th>
                             <th className='text-center'>Seriya</th>
-                            <th className='text-center'>Object nomi</th>
+                            <th className='text-center'>Obyekt nomi</th>
                             <th className='text-center'>Suv satxi(sm)</th>
-                            <th className='text-center'>Tuzlik darajasi(EC25)</th>
-                            <th className='text-center'>Bosim (kPa)</th>
+                            <th className='text-center'>Harorat</th>
+                            <th className='text-center'>Tuzlilik</th>
                             <th className='text-center'>Vaqt</th>
                             <th className='text-center'>Sana</th>
                             <th className='text-center'>Signal darajasi</th>
@@ -63,33 +62,33 @@ const Index = () => {
                         {baseData?.map((data, i) => {
                             return (
                                 <tr key={data._id}>
-                                    <td className=' '>{i + 1}</td>
-                                    <td className=' '>
+                                           <td>{((i+1))}</td>
+                                    <td className='whitespace-nowrap'>
                                         <div className='whitespace-nowrap'>{data?.device?.serie}</div>
                                     </td>
-                                    <td className=''>
+                                    <td>
                                                 <div className='whitespace-nowrap text-xs'>{data?.device?.name}</div>
                                             </td>
-                                    <td className=' '>
-                                        <div className='whitespace-nowrap'>{data.level}</div>
+                                    <td className='whitespace-nowrap'>
+                                        <div className='whitespace-nowrap'>{data?.level}</div>
                                     </td>
-                                    <td className=' '>
-                                        <div className='whitespace-nowrap'>{data.salinity}</div>
+                                    <td className='whitespace-nowrap'>
+                                        <div className='whitespace-nowrap'>{data?.temperature}</div>
                                     </td>
-                                    <td className=' '>
-                                        <div className='whitespace-nowrap'>{data.volume}</div>
+                                    <td className='whitespace-nowrap'>
+                                        <div className='whitespace-nowrap'>{data?.salinity}</div>
                                     </td>
 
-                                    <td className=' '>
+                                    <td className='whitespace-nowrap'>
                                         <div className='whitespace-nowrap  '>{getHourAndMinutesFromTimestamp(data?.date_in_ms || 0)}</div>
                                     </td>
-                                    <td className=' '>
+                                    <td className='whitespace-nowrap'>
                                         <div className='whitespace-nowrap  '>{getDateFromTimestamp(data?.date_in_ms || 0)}</div>
                                     </td>
-                                    <td className=' '>
+                                    <td className='whitespace-nowrap'>
                                         <div className='whitespace-nowrap    flex items-center gap-2'>
                                             {' '}
-                                            {data.signal ? <GreenDot /> : <RedDot />} {data.signal ? 'Yaxshi' : "Signal yo'q"}{' '}
+                                            {data.signal === "good" ? <GreenDot /> : <RedDot />} {data.signal === "good" ? 'Yaxshi' : "Signal yo'q"}{' '}
                                         </div>
                                     </td>
                                 </tr>

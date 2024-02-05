@@ -11,19 +11,29 @@ import getData from '../../utils/getData';
 import { downloadExcel } from 'react-export-table-to-excel';
 import { GreenDot, RedDot } from '../../../public/assets/svgs';
 import { Miniloader } from '../Component/Miniloader';
+import axios from 'axios';
+const options = [
+    { value: '500', label: '500' },
+    { value: '1000', label: '1000' },
+    { value: '1500', label: '1500' },
+    { value: '2000', label: '2000' },
+    { value: '5000', label: '5000' },
+    { value: '7000', label: '7000' },
+];
 function ConstructorOperator () {
     const dispatch = useDispatch();
     const [date3, setDate3] = useState<any>([]);
     const { to, from } = compileTimes(date3);
     const [device, setDevice] = useState<string>();
-    const [data, setData] = useState<{ region: string }>();
+    const [data, setData] = useState<{ region: string , limit:string }>();
     const [events, setEvents] = useState<{ total: number; offset: number; data: EventFace[]; limit: number }>({ data: [], limit: 0, offset: 0, total: 0 });
     const [devices, setDevices] = useState<{ data: DevicesFace[] }>({ data: [] });
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
     const { token } = useSelector((state: IRootState) => state.data);
+    const [progress, setProgress] = useState(0);
 
-    const header = ['_id', 'level', 'volume', 'salinity', 'date_in_ms'];
+    const header = ['_id', 'level', 'temperature' , "salinity", 'date_in_ms'];
     useEffect(() => {
         dispatch(setPageTitle('Events'));
         getData({url : `devices/user` ,token , setData : setDevices })
@@ -36,7 +46,34 @@ function ConstructorOperator () {
             token
         });
     }, [page]);
+    const handleDownloadAll = () => {
+        const fileDownloadUrl = `https://back1.livewater.uz/basedata/xlsx?${from?`&filter[start]=${from}`:''}${to?`&filter[end]=${to}`:''}${device?`&filter[device]=${device}`:''}${
+            data?.region ? `&filter[region]=${data.region}` : ''
+        }${data?.limit ? `&page[limit]=${data.limit}` : ''}`;
+        axios({
+            url: fileDownloadUrl,
+            method: 'GET',
+            responseType: 'blob', 
+            onDownloadProgress: e => {
+                const newProgress = Math.round((e.loaded * 100) / e.total!);
+                setProgress(newProgress);
 
+                if (newProgress === 100) {
+                }
+            }
+        })
+            .then(response => {
+                const blob = new Blob([response.data], { type: response.headers['content-type'] });
+                const url = window.URL.createObjectURL(blob);
+                window.open(url);
+            })
+            .catch(error => {
+                console.error('Error downloading file:', error);
+            })
+            .finally(() => {
+                setProgress(0);
+            });
+    };
     const filter = (e: React.FormEvent) => {
         e.preventDefault();
         setPage(0);
@@ -57,22 +94,36 @@ function ConstructorOperator () {
             }
         });
     }
+    const handleChange = (e: any) => {
+        setData(prevData => ({
+            ...prevData!,
+            [e.target.name]: e.target.value
+        }));
+    };
     return (
         <>
             <ul className='flex space-x-2 rtl:space-x-reverse'>
                 <li>
                     <Link to='/' className='text-primary hover:underline'>
-                        Dashboard
+                    Asosiy sahifa
                     </Link>
                 </li>
                 <li onClick={handleDownloadExcel} className="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
-                    <span>ConstructorOperator</span>
+                    <span>Constructor</span>
                 </li>
             </ul>
             <div className='panel  mt-5'>
                 <div className='flex items-center mb-5  justify-between '>
                     <h5 className='font-semibold text-lg dark:text-white-light'>Barcha eventlar ({events?.total})</h5>
                     <div className='flex '>
+                    <select className='form-input h-13 w-fit  flex ' name='limit' onChange={e => handleChange(e)}>
+                            <option value={''}>Limit </option>
+                            {options.map((el, i) => (
+                                <option value={el.value} key={i}>
+                                    {el.label}
+                                </option>
+                            ))}
+                        </select>
                         <button type='button' className='btn btn-primary btn-sm m-1' onClick={handleDownloadExcel}>
                             <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' className='w-5 h-5 ltr:mr-2 rtl:ml-2'>
                                 <path
@@ -84,8 +135,9 @@ function ConstructorOperator () {
                             </svg>
                             Sahifadan yuklash
                         </button>
-                        <a
-                            href={`http://livewater.uz:4000/basedata/xlsx/?${from ? `&filter[start]=${from}` : ''}${to ? `&filter[end]=${to}` : ''}${device ? `&filter[device]=${device}` : ''}`}
+                        <button
+                        disabled={progress !==0}
+                        onClick={handleDownloadAll}
                             className='btn btn-primary btn-sm m-1'
                         >
                             <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' className='w-5 h-5 ltr:mr-2 rtl:ml-2'>
@@ -96,8 +148,8 @@ function ConstructorOperator () {
                                 <path opacity='0.5' d='M13 2.5V5C13 7.35702 13 8.53553 13.7322 9.26777C14.4645 10 15.643 10 18 10H22' stroke='currentColor' strokeWidth='1.5' />
                                 <path opacity='0.5' d='M7 14L6 15L7 16M11.5 16L12.5 17L11.5 18M10 14L8.5 18' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
                             </svg>
-                            ConstructorOperatordan yuklash
-                        </a>
+                           {progress === 0 ?' Barchasini yuklash' :`Yuklanmoqda...${progress}%`}
+                        </button>
                     </div>
                 </div>
                 <div className='flex flex-row items-stretch gap-5 '>
@@ -139,8 +191,8 @@ function ConstructorOperator () {
                                     <th className='text-center text-xs'>Serie</th>
                                     <th className='text-center text-xs'>Obyekt nomi</th>
                                     <th className='text-center text-xs'>Suv satxi(sm)</th>
-                                    <th className='text-center text-xs'>Tuzlik darajasi(EC25)</th>
-                                    <th className='text-center text-xs'>Bosim (kPa)</th>
+                                    <th className='text-center text-xs'>Tuzlilik</th>
+                                    <th className='text-center text-xs'>Harorat</th>
                                     <th className='text-center text-xs'>Vaqt</th>
                                     <th className='text-center text-xs'>Sana</th>
                                     <th className='text-center text-xs'>Signal darajasi</th>
@@ -150,7 +202,7 @@ function ConstructorOperator () {
                                 {events.data.map((data, i) => {
                                     return (
                                         <tr key={data._id}>
-                                            <td className=''>{i + 1}</td>
+                                            <td>{((events.limit *  events.offset) + (i+1))}</td>
                                             <td className=''>
                                                 <div className='whitespace-nowrap text-xs'>{data?.device?.serie}</div>
                                             </td>
@@ -164,7 +216,7 @@ function ConstructorOperator () {
                                                 <div className='whitespace-nowrap text-center '>{data?.salinity}</div>
                                             </td>
                                             <td className=''>
-                                                <div className='whitespace-nowrap text-center '>{data?.volume}</div>
+                                                <div className='whitespace-nowrap text-center '>{data?.temperature}</div>
                                             </td>
                                             <td className=''>
                                                 <div className=' block '>{getHourAndMinutesFromTimestamp(data?.date_in_ms || 0)}</div>
@@ -196,17 +248,6 @@ function ConstructorOperator () {
                                     </svg>
                                 </button>
                             </li>
-                            {page > 0 && (
-                                <li>
-                                    <button
-                                        onClick={() => !loading && setPage(page)}
-                                        type='button'
-                                        className={`flex justify-center items-center w-10 h-10 font-semibold p-2 rounded-full transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary`}
-                                    >
-                                        {page}
-                                    </button>
-                                </li>
-                            )}
                             <li>
                                 <button
                                     type='button'
@@ -215,19 +256,6 @@ function ConstructorOperator () {
                                     {page + 1}
                                 </button>
                             </li>
-                            {page + 2 <= events.total / events.limit && (
-                                <li>
-                                    <button
-                                        disabled={events?.total / events?.limit <= page + 2}
-                                        onClick={() => !loading && setPage(page + 2)}
-                                        type='button'
-                                        className={`flex justify-center items-center w-10 h-10 font-semibold p-2 rounded-full transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary`}
-                                    >
-                                        {page + 2}
-                                    </button>
-                                </li>
-                            )}
-
                             <li>
                                 <button
                                     disabled={events?.total / events?.limit <= page + 1}

@@ -40,7 +40,7 @@ const AddUser = () => {
             <ul className='flex space-x-2 rtl:space-x-reverse'>
                 <li>
                     <Link to='/' className='text-primary hover:underline'>
-                        Dashboard
+                    Asosiy sahifa
                     </Link>
                 </li>
                 <li>
@@ -49,7 +49,7 @@ const AddUser = () => {
                     </Link>
                 </li>
                 <li className="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
-                    <span>Foydalanuvchini qo'shish</span>
+                    <span>Yangi qo'shish+</span>
                 </li>
             </ul>
             <form onSubmit={e => handleSubmit(e)} className='space-y-5 mt-20'>

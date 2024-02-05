@@ -15,7 +15,7 @@ const IndexOperator = () => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Dashboard'));
+        dispatch(setPageTitle('Asosiy sahifa'));
         api('basedata/operator?page[limit]=50', { headers: { authorization: `Bearer ${token}` } }).then(res => {
             const { data } = res.data;
             const last_updated = data.filter((el: EventFace) => el?.date_in_ms === data[0].date_in_ms);
@@ -49,14 +49,14 @@ const IndexOperator = () => {
                     <thead>
                         <tr>
                             <th className='text-center'>#</th>
-                            <th className='text-center'>Seriya</th>
                             <th className='text-center'>Obyekt nomi</th>
+                            <th className='text-center'>Seriya</th>
                             <th className='text-center'>Suv satxi(sm)</th>
-                            <th className='text-center'>Tuzlik darajasi(EC25)</th>
-                            <th className='text-center'>Bosim (kPa)</th>
+                            <th className='text-center'>Tuzlik </th>
+                            <th className='text-center'>Harorati</th>
                             <th className='text-center'>Vaqt</th>
                             <th className='text-center'>Sana</th>
-                            <th className='text-center'>Signal darajasi</th>
+                            <th className='text-center'>Signal holati</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,19 +65,19 @@ const IndexOperator = () => {
                                 <tr key={data._id}>
                                     <td>{i + 1}</td>
                                     <td>
-                                        <div className='whitespace-nowrap'>{data?.device?.serie}</div>
-                                    </td>
-                                    <td>
                                         <div className='whitespace-nowrap'>{data?.device?.name}</div>
                                     </td>
                                     <td>
-                                        <div className='whitespace-nowrap'>{data.level}</div>
+                                        <div className='whitespace-nowrap'>{data?.device?.serie}</div>
                                     </td>
                                     <td>
-                                        <div className='whitespace-nowrap'>{data.salinity}</div>
+                                        <div className='whitespace-nowrap'>{data?.level}</div>
                                     </td>
                                     <td>
-                                        <div className='whitespace-nowrap'>{data.volume}</div>
+                                        <div className='whitespace-nowrap'>{data?.salinity}</div>
+                                    </td>
+                                    <td>
+                                        <div className='whitespace-nowrap'>{data?.temperature}</div>
                                     </td>
 
                                     <td>
@@ -89,7 +89,7 @@ const IndexOperator = () => {
                                     <td>
                                         <div className='whitespace-nowrap    flex items-center gap-2'>
                                             {' '}
-                                            {data.signal ? <GreenDot /> : <RedDot />} {data?.signal ? 'Yaxshi' : "Signal yo'q"}{' '}
+                                            {data.signal ==='good' ? <GreenDot /> : <RedDot />} {data?.signal === "good"? 'Yaxshi' : "Signal yo'q"}{' '}
                                         </div>
                                     </td>
                                 </tr>

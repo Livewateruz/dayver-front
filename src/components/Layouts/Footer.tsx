@@ -1,8 +1,9 @@
 const Footer = () => {
+   
     return (
         <div>
             <p className="dark:text-white-dark text-center ltr:sm:text-left rtl:sm:text-right pt-6">
-                © {new Date().getFullYear()}. Live Water All rights reserved.
+                © {new Date().getFullYear()}. Live Water Hamma huquqular himoyalangan.
             </p>
         </div>
     );

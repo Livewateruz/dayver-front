@@ -23,7 +23,7 @@ import DefaultRouterProvider from './router/index';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <Suspense>
-            <YMaps query={{ lang: 'en_RU' }}>
+            <YMaps query={{ lang: 'en_US' }}>
                 <Provider store={store}>
                     <DefaultRouterProvider />
                 </Provider>

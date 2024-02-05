@@ -15,7 +15,7 @@ const Regions = () => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Regions List'));
+        dispatch(setPageTitle('Hududlar ruyxati'));
     });
 
     const [page, setPage] = useState(1);
@@ -76,17 +76,17 @@ const Regions = () => {
             <ul className='flex space-x-2 rtl:space-x-reverse'>
                 <li>
                     <Link to='/' className='text-primary hover:underline'>
-                        Dashboard
+                    Asosiy sahifa
                     </Link>
                 </li>
                 <li className="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
-                    <span>Regions</span>
+                    <span>Hududlar</span>
                 </li>
             </ul>
-            <form onSubmit={e => addRegion(e)} className='flex  gap-5 items-center justify-center w-[500px] my-3 '>
-                <input value={data.name} name='name' onChange={e => handleChange(e)} type='text' placeholder='Region..' className='form-input' required />
-                <button type='submit' className='btn btn-primary  '>
-                    Qo'shish
+            <form onSubmit={e => addRegion(e)} className='flex  gap-5 items-center justify-center max-w-[550px] my-3 '>
+                <input value={data.name} name='name' onChange={e => handleChange(e)} type='text' placeholder='Region..' className='form-input w-2/3' required />
+                <button type='submit' className='btn btn-primary w-fit  '>
+                  Yangi qo'shish+
                 </button>
             </form>
             <div className='table-responsive mb-5 w-full'>

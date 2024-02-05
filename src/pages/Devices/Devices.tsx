@@ -12,10 +12,9 @@ function Devices () {
     const [loading, setLoading] = useState<boolean>(false);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Devices List'));
+        dispatch(setPageTitle('Qurilmalar ruyxati'));
     });
     const isDark = useSelector((state: IRootState) => state.themeConfig.theme) === 'dark' ? true : false;
-
     const [page, setPage] = useState(1);
     const PAGE_SIZES = [10, 20, 30, 50, 100];
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
@@ -38,20 +37,16 @@ function Devices () {
             <ul className='flex space-x-2 rtl:space-x-reverse'>
                 <li>
                     <Link to='/' className='text-primary hover:underline'>
-                        Dashboard
-                    </Link>
+                    Asosiy sahifa                    </Link>
                 </li>
                 <li className="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
-                    <span>Devices</span>
+                    <span>Qurilmalar</span>
                 </li>
             </ul>
             <div className='panel px-0 border-white-light dark:border-[#1b2e4b] mt-5'>
                 <div className='invoice-table'>
                     <div className='mb-4.5 px-5 flex md:items-center justify-between w-full md:flex-row flex-col gap-5'>
                         <h5 className='font-semibold text-lg dark:text-white-light'>Barcha qurilmalar ({devices?.total})</h5>
-                        <div className='ltr:ml-auto rtl:mr-auto'>
-                            <input type='text' className='form-input w-auto' placeholder='Search...' />
-                        </div>
                         <div className='flex items-center gap-2'>
                             <Link to='/device/add' className='btn btn-primary gap-2'>
                                 <svg className='w-5 h-5' viewBox='0 0 24 24' stroke='currentColor' strokeWidth='1.5' fill='none' strokeLinecap='round' strokeLinejoin='round'>
@@ -62,20 +57,19 @@ function Devices () {
                             </Link>
                         </div>
                     </div>
-
                     <div className='datatables pagination-padding'>
                         <DataTable
                             className={`${isDark} whitespace-nowrap table-hover`}
                             records={devices.data}
                             columns={[
                                 {
-                                    accessor: 'Obyekt nomi',
-                                    render: ({ name }) => (
-                                        <span>
-                                            <div className='font-semibold'>{`${name}`}</div>
+                                    accessor: 'N',
+                                    sortable: false,
+                                    render: ({ _id } , i) => (
+                                        <span key={_id}>
+                                            <div className='text-primary underline hover:no-underline font-semibold'>{((devices.limit *  devices.offset) + (i+1))}</div>
                                         </span>
-                                    ),
-                                    sortable: false
+                                    )
                                 },
                                 {
                                     accessor: 'Id',
@@ -83,6 +77,15 @@ function Devices () {
                                     render: ({ _id }) => (
                                         <span key={_id}>
                                             <div className='text-primary underline hover:no-underline font-semibold'>{`${_id}`}</div>
+                                        </span>
+                                    )
+                                },
+                                {
+                                    accessor: 'obyekt nomi',
+                                    sortable: false,
+                                    render: ({ name, _id }) => (
+                                        <span>
+                                            <div className='text-primary underline hover:no-underline font-semibold'>{`${name}`}</div>
                                         </span>
                                     )
                                 },
@@ -104,7 +107,7 @@ function Devices () {
                                         </div>
                                     )
                                 },
-                              
+                                
                                 {
                                     accessor: 'Egasi',
                                     sortable: false,
@@ -113,7 +116,7 @@ function Devices () {
 
                                 {
                                     accessor: 'action',
-                                    title: 'Actions',
+                                    title: 'Tahrirlash',
                                     sortable: false,
                                     textAlignment: 'center',
                                     render: ({ _id }) => (
