@@ -50,6 +50,7 @@ const IndexOperator = () => {
                         <tr>
                             <th className='text-center'>#</th>
                             <th className='text-center'>Seriya</th>
+                            <th className='text-center'>Obyekt nomi</th>
                             <th className='text-center'>Suv satxi(sm)</th>
                             <th className='text-center'>Tuzlik darajasi(EC25)</th>
                             <th className='text-center'>Bosim (kPa)</th>
@@ -65,6 +66,9 @@ const IndexOperator = () => {
                                     <td>{i + 1}</td>
                                     <td>
                                         <div className='whitespace-nowrap'>{data?.device?.serie}</div>
+                                    </td>
+                                    <td>
+                                        <div className='whitespace-nowrap'>{data?.device?.name}</div>
                                     </td>
                                     <td>
                                         <div className='whitespace-nowrap'>{data.level}</div>

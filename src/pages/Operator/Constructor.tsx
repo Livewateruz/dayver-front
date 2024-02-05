@@ -137,6 +137,7 @@ function ConstructorOperator () {
                                 <tr>
                                     <th className='text-center text-xs'>#</th>
                                     <th className='text-center text-xs'>Serie</th>
+                                    <th className='text-center text-xs'>Obyekt nomi</th>
                                     <th className='text-center text-xs'>Suv satxi(sm)</th>
                                     <th className='text-center text-xs'>Tuzlik darajasi(EC25)</th>
                                     <th className='text-center text-xs'>Bosim (kPa)</th>
@@ -152,6 +153,9 @@ function ConstructorOperator () {
                                             <td className=''>{i + 1}</td>
                                             <td className=''>
                                                 <div className='whitespace-nowrap text-xs'>{data?.device?.serie}</div>
+                                            </td>
+                                            <td className=''>
+                                                <div className='whitespace-nowrap text-xs'>{data?.device?.name}</div>
                                             </td>
                                             <td className=''>
                                                 <div className='whitespace-nowrap text-center'>{data?.level}</div>

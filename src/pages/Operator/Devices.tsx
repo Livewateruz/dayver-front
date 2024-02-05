@@ -55,15 +55,7 @@ function UserDevices () {
                             className={`${isDark} whitespace-nowrap table-hover`}
                             records={devices.data}
                             columns={[
-                                {
-                                    accessor: 'Qurilma joylashuv nomi',
-                                    render: ({ name }) => (
-                                        <span>
-                                            <div className='font-semibold'>{`${name}`}</div>
-                                        </span>
-                                    ),
-                                    sortable: false
-                                },
+                                
                                 {
                                     accessor: 'Id',
                                     sortable: false,
@@ -79,6 +71,15 @@ function UserDevices () {
                                     render: ({ serie, _id }) => (
                                         <span>
                                             <div className='text-primary underline hover:no-underline font-semibold'>{`${serie}`}</div>
+                                        </span>
+                                    )
+                                },
+                                {
+                                    accessor: 'Obyekt nomi',
+                                    sortable: false,
+                                    render: ({ name }) => (
+                                        <span>
+                                            <div className=''>{`${name}`}</div>
                                         </span>
                                     )
                                 },
