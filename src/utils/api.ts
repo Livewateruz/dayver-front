@@ -3,7 +3,7 @@ import { toast } from './toast';
 const local = `http://localhost:4000`
 const server = `https://back1.livewater.uz`
 export const api = axios.create({
-    baseURL: server,
+    baseURL: local,
     headers: { 'Content-type': 'application/json' }
 });
 

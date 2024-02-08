@@ -77,7 +77,7 @@ function Users () {
                                                 <div className='whitespace-nowrap '>{user?.role}</div>
                                             </td>
                                             <td className=''>
-                                                <div className=' block '>{getPrettyTime(user?.created_at || "")}</div>
+                                                <div className='whitespace-nowrap'>{getPrettyTime(user?.created_at || "")}</div>
                                             </td>
                                             <td className=''>
                                                 <div className=' '>{getPrettyTime(user?.updated_at || "")}</div>

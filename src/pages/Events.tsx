@@ -34,7 +34,7 @@ function Events () {
     const [page, setPage] = useState<number>(0);
     const { token } = useSelector((state: IRootState) => state.data);
 
-    const header = ['_id', 'level', 'temperature', 'salinity' , 'date_in_ms', 'signal', 'updated_at', 'created_at', 'serie' , "name"];
+    const header = ['_id', 'level', 'temperature', 'salinity' , 'date_in_ms', 'signal',  'serie' , "name"];
     useEffect(() => {
         dispatch(setPageTitle('Constructor'));
         getData({ url: '/regions', setData: setRegions, token });
@@ -85,7 +85,7 @@ function Events () {
     }
 
     const handleDownloadAll = () => {
-        const fileDownloadUrl = `https://back2.livewater.uz/basedata/xlsx?${from?`&filter[start]=${from}`:''}${to?`&filter[end]=${to}`:''}${device?`&filter[device]=${device}`:''}${
+        const fileDownloadUrl = `http://localhost:4000/basedata/xlsx?${from?`&filter[start]=${from}`:''}${to?`&filter[end]=${to}`:''}${device?`&filter[device]=${device}`:''}${
             data?.region ? `&filter[region]=${data.region}` : ''
         }${data?.limit ? `&page[limit]=${data.limit}` : ''}`;
         axios({
