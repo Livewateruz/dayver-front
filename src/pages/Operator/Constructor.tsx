@@ -47,7 +47,7 @@ function ConstructorOperator () {
         });
     }, [page]);
     const handleDownloadAll = () => {
-        const fileDownloadUrl = `https://back1.livewater.uz/basedata/xlsx?${from?`&filter[start]=${from}`:''}${to?`&filter[end]=${to}`:''}${device?`&filter[device]=${device}`:''}${
+        const fileDownloadUrl = `https://back1.livewater.uz/basedata/opr/constructorxlsx?${from?`&filter[start]=${from}`:''}${to?`&filter[end]=${to}`:''}${device?`&filter[device]=${device}`:''}${
             data?.region ? `&filter[region]=${data.region}` : ''
         }${data?.limit ? `&page[limit]=${data.limit}` : ''}`;
         axios({
