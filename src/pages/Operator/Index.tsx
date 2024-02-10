@@ -16,13 +16,12 @@ const IndexOperator = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setPageTitle('Asosiy sahifa'));
-        api('basedata/operator?page[limit]=50', { headers: { authorization: `Bearer ${token}` } }).then(res => {
-            const { data } = res.data;
-            const last_updated = data.filter((el: EventFace) => el?.date_in_ms === data[0].date_in_ms);
-            const bad = last_updated.filter((el: EventFace) => el.signal === 'nosignal');
-            const good = last_updated.filter((el: EventFace) => el.signal === 'good');
-            setStat({ total: last_updated.length, good: good.length, bad: bad.length });
-            setBaseData(last_updated);
+        api('basedata/operatorlastdata', { headers: { authorization: `Bearer ${token}` } }).then(res => {
+            const { data = [] } = res;
+            const bad = data.filter((el: EventFace) => el?.signal === 'nosignal');
+            const good = data.filter((el: EventFace) => el?.signal === 'good');
+            setStat({ total: data.length, good: good.length, bad: bad.length });
+            setBaseData(data);
         });
     }, []);
     return (
