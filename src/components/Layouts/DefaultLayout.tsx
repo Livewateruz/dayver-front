@@ -1,22 +1,23 @@
 import { PropsWithChildren, Suspense, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import App from '../../App';
+import Portals from '../../components/Portals';
 import { IRootState } from '../../store';
+import { setRole, setUser } from '../../store/dataConfigSlice';
 import { toggleSidebar } from '../../store/themeConfigSlice';
+import { api } from '../../utils/api';
+import { toast } from '../../utils/toast';
 import Footer from './Footer';
 import Header from './Header';
 import Setting from './Setting';
 import Sidebar from './Sidebar';
-import Portals from '../../components/Portals';
-import { api } from '../../utils/api';
-import { setRole, setToken, setUser } from '../../store/dataConfigSlice';
-import { toast } from '../../utils/toast';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
     const { token } = useSelector((state: IRootState) => state.data);
     const dispatch = useDispatch();
-
+   const navigate = useNavigate();
     const [showLoader, setShowLoader] = useState(true);
     const [showTopButton, setShowTopButton] = useState(false);
     const goToTop = () => {
@@ -31,23 +32,16 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
             setShowTopButton(false);
         }
     };
-
+     
     useEffect(() => {
         window.addEventListener('scroll', onScrollHandler);
-        api('auth', { headers: { authorization: `Bearer ${token}` } })
+        if(token){
+             api('auth', { headers: { authorization: `Bearer ${token}` } })
             .then(res => {
                 if (res.status === 200) {
                     dispatch(setUser({ user: res?.data?.data }));
                     dispatch(setRole({ role: res?.data?.role || "nouser" }));
                     setShowLoader(false);
-                } else {
-                    toast.fire({
-                        icon: 'error',
-                        title: 'Token eskirgan, qayta kiring',
-                        padding: '10px 20px'
-                    });
-                    setShowLoader(false);
-                    dispatch(setToken({ token: false }));
                 }
             })
             .catch(err => {
@@ -57,8 +51,13 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                     padding: '10px 20px'
                 });
                 setShowLoader(false);
-                dispatch(setToken({ token: false }));
+                navigate('/login')
             });
+        }else{
+            navigate('/login')
+
+        }
+     
         const screenLoader = document.getElementsByClassName('screen_loader');
         if (screenLoader?.length) {
             screenLoader[0].classList.add('animate__fadeOut');
@@ -99,9 +98,6 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                             )}
                         </div>
 
-                        {/* BEGIN APP SETTING LAUNCHER */}
-                        <Setting />
-                        {/* END APP SETTING LAUNCHER */}
 
                         <div className={`${themeConfig.navbar} main-container text-black dark:text-white-dark min-h-screen`}>
                             {/* BEGIN SIDEBAR */}

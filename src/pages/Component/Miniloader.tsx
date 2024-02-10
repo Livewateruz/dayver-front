@@ -9,7 +9,7 @@ export const Miniloader = () => {
             fill='none'
             strokeLinecap='round'
             strokeLinejoin='round'
-            className='w-5 h-5 animate-[spin_2s_linear_infinite] inline-block align-middle ltr:mr-2 rtl:ml-2'
+            className='w-5 h-5 animate-[spin_2s_linear_infinite] inline-block align-middle '
         >
             <line x1='12' y1='2' x2='12' y2='6'></line>
             <line x1='12' y1='18' x2='12' y2='22'></line>

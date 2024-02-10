@@ -31,69 +31,82 @@ const routes = [
     {
         path: '/',
         for: 'admin',
+        layout :'' ,
         element: <Index />
     },
 
     {
-        path: '/',
+        path: '/login',
         for: 'nouser',
+        layout :'blank' ,
         element: <LoginBoxed />
     },
 
     {
         path: '/constructor',
         for: 'admin',
+        layout :'' ,
         element: <Constructor />
     },
     {
         path: '/events',
         for: 'admin',
+        layout :'' ,
         element: <ServerEvent />
     },
     {
         path: '/regions',
         for: 'admin',
+        layout :'' ,
         element: <Regions />
     },
     {
         path: '/devices',
         for: 'admin',
+        layout :'' ,
         element: <Devices />
     },
     {
         path: '/device/map',
         for: 'admin',
+        layout :'' ,
         element: <DevicesMap />
     },
     {
         path: '/device/add',
         for: 'admin',
+        layout :'' ,
         element: <AddDevice />
     },
     {
         path: '/devices/:id',
         for: 'admin',
+        layout :'' ,
         element: <PreviewDevice />
     },
     {
         path: '/events/add-event',
         for: 'admin',
+        layout :'' ,
         element: <AddModem />
     },
     // !Users pages
     {
         path: '/users',
         for: 'admin',
+        layout :'' ,
         element: <Users />
     },
     {
         path: '/users/:id',
         for: 'admin',
+        layout :'' ,
         element: <PreviewUser />
     },
     {
         path: '/user/add',
         for: 'admin',
+        layout :'' ,
         element: <AddUser />
     },
 
@@ -101,27 +114,31 @@ const routes = [
     {
         path: '/',
         for: 'operator',
+        layout :'' ,
         element: <IndexOperator />
     },
     {
         path: '/constructor',
         for: 'operator',
+        layout :'' ,
         element: <ConstructorOperator />
     },
     {
         path: '/devices',
         for: 'operator',
+        layout :'' ,
         element: <UserDevices />
     },
     {
         path: '/about',
         for: 'admin',
+        layout :'blank' ,
         element: <About />,
-        layout: 'blank'
     },
     {
         path: '*',
         for: 'admin',
+        layout :'blank' ,
         element: <Error />
     }
 ];

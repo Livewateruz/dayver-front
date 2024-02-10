@@ -13,7 +13,7 @@ const DefaultRouterProvider = () => {
             element: route.layout === 'blank' ? <BlankLayout>{route.element}</BlankLayout> : <DefaultLayout>{route.element}</DefaultLayout>
         };
     });
-    const sortedRoutes = finalRoutes.filter(route => route.for === role);
+    const sortedRoutes = finalRoutes.filter(route => route.for === role || "nouser");
     const router = createBrowserRouter(sortedRoutes);
     return <RouterProvider router={router} />;
 };

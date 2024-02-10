@@ -44,8 +44,8 @@ function ServerEvents () {
                 </li>
             </ul>
             <div className='panel mt-5'>
-                <div className='flex  justify-between mb-5'>
-                    <h5 className='font-semibold text-lg dark:text-white-light'>Barcha ({data.total})</h5>
+                <div className='flex relative  justify-between mb-5'>
+                    <h5 className='font-semibold  absolute text-lg dark:text-white-light'>Barcha ({data.total})</h5>
                     <ul className='inline-flex items-center space-x-1 rtl:space-x-reverse m-auto mb-2'>
                         <li>
                             <button

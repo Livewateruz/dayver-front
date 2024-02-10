@@ -16,14 +16,14 @@ const IndexOperator = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setPageTitle('Asosiy sahifa'));
-        api('basedata/operatorlastdata', { headers: { authorization: `Bearer ${token}` } }).then(res => {
+        api('basedata/opr/lastadded', { headers: { authorization: `Bearer ${token}` } }).then(res => {
             const { data = [] } = res;
             const bad = data.filter((el: EventFace) => el?.signal === 'nosignal');
             const good = data.filter((el: EventFace) => el?.signal === 'good');
             setStat({ total: data.length, good: good.length, bad: bad.length });
             setBaseData(data);
         });
-    }, []);
+    }, []); 
     return (
         <div>
             <div className='flex flex-wrap w-full justify-evenly mb-5'>
