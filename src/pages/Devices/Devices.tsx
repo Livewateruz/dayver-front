@@ -103,7 +103,7 @@ function Devices () {
                                     sortable: true,
                                     render: ({ region }) => (
                                         <div className='flex items-center font-semibold'>
-                                            <div>{region.name}</div>
+                                            <div>{region?.name}</div>
                                         </div>
                                     )
                                 },
@@ -111,7 +111,7 @@ function Devices () {
                                 {
                                     accessor: 'Egasi',
                                     sortable: false,
-                                    render: ({ owner }) => <div className='whitespace-nowrap flex items-center gap-2'>{owner.first_name + ' ' + owner.last_name}</div>
+                                    render: ({ owner }) => <div className='whitespace-nowrap flex items-center gap-2'>{owner?.first_name + ' ' + owner?.last_name}</div>
                                 },
 
                                 {
